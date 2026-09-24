@@ -1,0 +1,39 @@
+name: Build DSTMods Framework
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    env:
+      THEOS: /Users/runner/theos
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $THEOS
+
+      - name: Install Dependencies
+        run: |
+          brew update
+          brew install ldid make
+
+      - name: Build Framework
+        run: |
+          export THEOS=$THEOS
+          make clean
+          make
+
+      - name: Upload DSTMods
+        uses: actions/upload-artifact@v4
+        with:
+          name: DSTMods-Framework
+          path: |
+            .theos/obj/debug/DSTMods.dylib
+            DSTMods.plist
