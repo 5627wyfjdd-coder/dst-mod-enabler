@@ -1,0 +1,8 @@
+Package: com.dst.modloader.icebackpack
+Name: DSTModLoader Ice Backpack
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Creates the DST mods directory and installs the bundled Ice Backpack mod.
+Maintainer: local
+Section: Tweaks
+Author: local
