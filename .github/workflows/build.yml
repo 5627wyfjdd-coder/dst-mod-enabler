@@ -1,0 +1,5 @@
+- name: Build Framework
+  run: |
+    export THEOS=$THEOS
+    make clean
+    make FINALPACKAGE=0
