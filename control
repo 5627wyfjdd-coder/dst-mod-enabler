@@ -1,9 +1,0 @@
-Package: com.dstmods.loader
-Name: DST Mods Loader
-Version: 1.0.0
-Architecture: iphoneos-arm
-Description: Enable Documents Mods for Don't Starve Together
-Maintainer: You
-Author: You
-Section: Tweaks
-Depends: mobilesubstrate
