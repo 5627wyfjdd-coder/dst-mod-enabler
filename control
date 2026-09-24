@@ -1,9 +1,0 @@
-Package: com.dstmods.loader
-Name: DSTMods
-Version: 1.0.0
-Architecture: iphoneos-arm64
-Description: DST Mods Loader
-Maintainer: s
-Author: s
-Section: Tweaks
-Depends: mobilesubstrate
