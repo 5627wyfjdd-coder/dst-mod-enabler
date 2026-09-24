@@ -1,0 +1,57 @@
+name: Build DSTMods
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    env:
+      THEOS: /Users/runner/theos
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $THEOS
+
+      - name: Install Dependencies
+        run: |
+          brew update
+          brew install make ldid dpkg
+          echo "/opt/homebrew/bin" >> $GITHUB_PATH
+          echo "/usr/local/bin" >> $GITHUB_PATH
+
+      - name: Verify Tools
+        run: |
+          clang --version
+          make --version
+          ldid -v || true
+
+      - name: Build Package
+        run: |
+          export THEOS=$THEOS
+          make clean
+          make package FINALPACKAGE=1
+
+      - name: Upload DEB
+        uses: actions/upload-artifact@v4
+        with:
+          name: DSTMods-DEB
+          path: packages/*.deb
+
+      - name: Upload Dylib
+        uses: actions/upload-artifact@v4
+        with:
+          name: DSTMods-Dylib
+          path: |
+            .theos/obj/debug/arm64/DSTMods.dylib
+            .theos/obj/debug/arm64e/DSTMods.dylib
+            .theos/obj/debug/DSTMods.dylib
+          if-no-files-found: ignore
